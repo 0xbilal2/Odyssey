@@ -2,6 +2,41 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function() {
+        try {
+          var origDefineProperty = Object.defineProperty;
+          Object.defineProperty = function(obj, prop, descriptor) {
+            if ((obj === window || obj === globalThis || obj === Object.prototype) && prop === 'ethereum') {
+              try {
+                return origDefineProperty.call(this, obj, prop, descriptor);
+              } catch (err) {
+                console.warn('[Wallet Guard] Intercepted ethereum property redefinition:', err);
+                if (descriptor && 'value' in descriptor) {
+                  try { obj.ethereum = descriptor.value; } catch (_) {}
+                }
+                return obj;
+              }
+            }
+            return origDefineProperty.call(this, obj, prop, descriptor);
+          };
+        } catch (_) {}
+
+        window.addEventListener('error', function(e) {
+          if (e && e.message && e.message.indexOf('Cannot redefine property: ethereum') !== -1) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+          }
+        }, true);
+
+        window.addEventListener('unhandledrejection', function(e) {
+          var msg = (e && e.reason && (e.reason.message || String(e.reason))) || '';
+          if (msg.indexOf('Cannot redefine property: ethereum') !== -1) {
+            e.preventDefault();
+          }
+        }, true);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Odyssey</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
