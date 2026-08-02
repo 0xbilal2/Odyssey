@@ -45,7 +45,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex items-center gap-3 px-2 pt-2">
           <img
             src={logoUrl}
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/logo.png'; }}
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              target.onerror = null;
+              target.src = '/logo.png';
+            }}
             alt="Odyssey Logo"
             className="w-8 h-8 rounded-xl object-cover border border-[#BAC095]/40 shadow-sm"
           />

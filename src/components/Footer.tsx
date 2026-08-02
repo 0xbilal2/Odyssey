@@ -15,7 +15,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         <div className="flex items-center gap-2.5">
           <img 
             src={logoUrl} 
-            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/logo.png'; }}
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement;
+              target.onerror = null;
+              target.src = '/logo.png';
+            }}
             alt="Odyssey Logo" 
             className="w-6 h-6 rounded-md object-cover border border-[#BAC095]/30 shadow-sm"
           />
