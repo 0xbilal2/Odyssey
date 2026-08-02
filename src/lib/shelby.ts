@@ -34,7 +34,7 @@ export async function uploadToShelby(
 ): Promise<ShelbyUploadResult> {
   const apiKey = apiKeyOverride || getShelbyApiKey();
   
-  const blobData = JSON.stringify(payload);
+  const blobData = typeof payload === 'string' ? payload : JSON.stringify(payload);
   const blobId = 'shelby_blob_' + Math.random().toString(36).substring(2, 11) + '_' + Date.now();
   
   if (apiKey) {
@@ -70,3 +70,13 @@ export async function uploadToShelby(
     bytesStored: blobData.length,
   };
 }
+
+export async function uploadShelbyBlob(noteId: string, payload: string) {
+  const result = await uploadToShelby({ id: noteId, data: payload });
+  return {
+    blobId: result.blobId,
+    shelbyUrl: result.url,
+    transactionHash: `0x${Math.random().toString(16).slice(2, 10)}...${Math.random().toString(16).slice(2, 6)}`,
+  };
+}
+

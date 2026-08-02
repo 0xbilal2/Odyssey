@@ -7,10 +7,11 @@ export function getInitialSampleNotes(walletAddress: string): Note[] {
   return [
     {
       id: 'note-sample-1',
-      title: 'Aptos Protocol Research & Block-STM',
+      title: 'Aptos Protocol Research',
       body: 'Investigating the parallel execution engine block-STM on Aptos. Performance metrics suggest a significant throughput increase over sequential processing models. Smart contract state conflicts are handled speculatively with optimistic execution.',
-      preview: 'Investigating the parallel execution engine block-STM on Aptos. Performance metrics suggest a significant throughput increase over sequential processing models...',
+      preview: 'Investigating the parallel execution engine block-STM. Performance metrics suggest a...',
       isEncrypted: true,
+      isFavorite: false,
       cipherText: 'U2FsdGVkX1+9qK0mZ8n2YvL1pQ4rW5t6y7u8i9o0pA==',
       iv: 'x8q3m4b8v1c5',
       salt: 's0l3k6j9h2g5',
@@ -24,10 +25,11 @@ export function getInitialSampleNotes(walletAddress: string): Note[] {
     },
     {
       id: 'note-sample-2',
-      title: 'Project Alpha Encryption Strategy',
+      title: 'Project Alpha Ideas',
       body: 'Zero-knowledge proofs combined with AES-256-GCM client side key derivation. All payloads are signed by wallet address ' + shortWallet + ' before committing to Shelby network storage blobs.',
-      preview: 'Zero-knowledge proofs combined with AES-256-GCM client side key derivation. All payloads are signed by wallet...',
+      preview: 'e7x9q2m4b8v1c5z0l3k6j9h2g5f8d1s4a7p0o3i6u9y2t5r8e1w4q7\n[Encrypted Block]',
       isEncrypted: true,
+      isFavorite: false,
       cipherText: 'e7x9q2m4b8v1c5z0l3k6j9h2g5f8d1s4a7p0o3i6u9y2t5r8e1w4q7',
       iv: 'a7p0o3i6u9y2',
       salt: 't5r8e1w4q7m9',
@@ -43,8 +45,9 @@ export function getInitialSampleNotes(walletAddress: string): Note[] {
       id: 'note-sample-3',
       title: 'Seed Phrase Backup Strategy',
       body: 'Exploring multi-sig shards distributed across geographic locations. Physical steel plates vs. encrypted digital backups with Shamir Secret Sharing algorithm.',
-      preview: 'Exploring multi-sig shards distributed across geographic locations. Physical steel plates vs. encrypted digital backups...',
+      preview: 'Exploring multi-sig shards distributed across geographic locations. Physical steel plates v...',
       isEncrypted: true,
+      isFavorite: true,
       cipherText: 'm2b4v6c8x0z1a3s5d7f9g1h3j5k7l9',
       iv: 'c8x0z1a3s5d7',
       salt: 'f9g1h3j5k7l9',
@@ -56,7 +59,34 @@ export function getInitialSampleNotes(walletAddress: string): Note[] {
       shelbyUrl: 'https://explorer.shelby.xyz/blob/shelby_blob_seed_backup_1092',
       walletAddress,
     },
+    {
+      id: 'note-sample-4',
+      title: 'ZK-Rollups vs Optimistic',
+      body: 'Comparison table draft. ZK proofs offer faster finality but higher computational overhead for verification on Aptos nodes. Optimistic rollups rely on dispute periods.',
+      preview: 'Comparison table draft. ZK proofs offer faster finality but higher computational overhead for...',
+      isEncrypted: true,
+      isFavorite: false,
+      cipherText: 'z9k8r7o6l5l4u3p2s1v0o9p8t7i6m5i4s3t2i1c0',
+      iv: 'z9k8r7o6l5l4',
+      salt: 'u3p2s1v0o9p8',
+      tags: ['Research'],
+      createdAt: new Date(Date.now() - 3600000 * 72).toISOString(),
+      updatedAt: new Date(Date.now() - 3600000 * 72).toISOString(),
+      transactionHash: '0x4d5e6f...7a8b',
+      shelbyBlobId: 'shelby_blob_zk_optimistic_9931',
+      shelbyUrl: 'https://explorer.shelby.xyz/blob/shelby_blob_zk_optimistic_9931',
+      walletAddress,
+    },
   ];
+}
+
+export function toggleFavoriteNote(walletAddress: string, noteId: string): Note[] {
+  const existing = loadNotes(walletAddress);
+  const updated = existing.map((n) =>
+    n.id === noteId ? { ...n, isFavorite: !n.isFavorite } : n
+  );
+  saveNotes(walletAddress, updated);
+  return updated;
 }
 
 export function loadNotes(walletAddress: string): Note[] {

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
-import { ShieldCheck, Wallet, LogOut, Copy, Check, Key, ExternalLink } from 'lucide-react';
+import { ShieldCheck, Wallet, LogOut, Copy, Check, Key, FileText, LayoutGrid } from 'lucide-react';
 import { getShelbyApiKey } from '../lib/shelby';
+import { ActiveNavView } from '../types';
 
 interface NavbarProps {
   onOpenShelbyKeyModal: () => void;
+  activeNav?: ActiveNavView;
+  onNavigate?: (nav: ActiveNavView) => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal, activeNav, onNavigate }) => {
   const { connected, account, connect, disconnect } = useWallet();
   const [copied, setCopied] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -20,7 +23,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal }) => {
       await connect("Petra");
     } catch (err: any) {
       console.error('Wallet connection error:', err);
-      // Fallback alert / guidance if Petra plugin isn't installed
       if (!window.aptos && !(window as any).petra) {
         if (confirm("Petra Wallet extension was not detected. Would you like to open petra.app to install it?")) {
           window.open("https://petra.app/", "_blank");
@@ -44,17 +46,20 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal }) => {
     : '';
 
   return (
-    <header className="sticky top-0 z-40 bg-[#3D4127]/90 backdrop-blur-md border-b border-[#BAC095]/15 px-4 md:px-8 py-3.5 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-[#3D4127]/95 backdrop-blur-md border-b border-[#BAC095]/15 px-4 md:px-8 py-3 transition-all">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         
         {/* Logo & Brand */}
-        <div className="flex items-center gap-3">
-          <div className="relative w-9 h-9 rounded-xl bg-[#636B2F] border border-[#BAC095]/30 flex items-center justify-center shadow-sm">
-            <svg className="w-5 h-5 text-[#D4DE95]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" strokeLinecap="round" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" strokeLinecap="round" />
-              <polygon points="12 6 15 12 12 18 9 12" fill="#D4DE95" stroke="none" />
-            </svg>
+        <button 
+          onClick={() => onNavigate?.(connected ? 'all' : 'all')} 
+          className="flex items-center gap-3 text-left group hover:opacity-95 transition-opacity cursor-pointer"
+        >
+          <div className="relative">
+            <img 
+              src="/logo.png" 
+              alt="Odyssey Logo" 
+              className="w-9 h-9 rounded-xl object-cover border border-[#BAC095]/40 shadow-md group-hover:scale-105 transition-transform"
+            />
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4DE95] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#D4DE95]"></span>
@@ -63,12 +68,70 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal }) => {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-display font-bold text-xl text-[#D4DE95] tracking-tight">Odyssey</span>
-              <span className="text-[10px] font-mono uppercase bg-[#636B2F]/40 text-[#D4DE95] px-2 py-0.5 rounded border border-[#BAC095]/20">
+              <span className="hidden sm:inline-block text-[10px] font-mono uppercase bg-[#636B2F]/40 text-[#D4DE95] px-2 py-0.5 rounded border border-[#BAC095]/20">
                 Aptos & Shelby
               </span>
             </div>
           </div>
-        </div>
+        </button>
+
+        {/* Center Navigation Links (Matching Image 2) */}
+        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          {connected && (
+            <button
+              onClick={() => onNavigate?.('all')}
+              className={`flex items-center gap-1.5 transition-colors ${
+                activeNav === 'all' || activeNav === 'recent' || activeNav === 'favorites'
+                  ? 'text-[#D4DE95] font-semibold border-b-2 border-[#D4DE95] pb-0.5'
+                  : 'text-[#BAC095]/80 hover:text-[#D4DE95]'
+              }`}
+            >
+              <LayoutGrid className="w-4 h-4" />
+              <span>Notes Dashboard</span>
+            </button>
+          )}
+
+          {connected && (
+            <button
+              onClick={() => onNavigate?.('editor')}
+              className={`flex items-center gap-1.5 transition-colors ${
+                activeNav === 'editor'
+                  ? 'text-[#D4DE95] font-semibold border-b-2 border-[#D4DE95] pb-0.5'
+                  : 'text-[#BAC095]/80 hover:text-[#D4DE95]'
+              }`}
+            >
+              <FileText className="w-4 h-4" />
+              <span>New Note Editor</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => onNavigate?.('features')}
+            className={`transition-colors ${
+              activeNav === 'features' ? 'text-[#D4DE95] font-semibold border-b-2 border-[#D4DE95] pb-0.5' : 'text-[#BAC095]/80 hover:text-[#D4DE95]'
+            }`}
+          >
+            Features
+          </button>
+
+          <button
+            onClick={() => onNavigate?.('security')}
+            className={`transition-colors ${
+              activeNav === 'security' ? 'text-[#D4DE95] font-semibold border-b-2 border-[#D4DE95] pb-0.5' : 'text-[#BAC095]/80 hover:text-[#D4DE95]'
+            }`}
+          >
+            Security
+          </button>
+
+          <button
+            onClick={() => onNavigate?.('pricing')}
+            className={`transition-colors ${
+              activeNav === 'pricing' ? 'text-[#D4DE95] font-semibold border-b-2 border-[#D4DE95] pb-0.5' : 'text-[#BAC095]/80 hover:text-[#D4DE95]'
+            }`}
+          >
+            Pricing
+          </button>
+        </nav>
 
         {/* Right Action Cluster */}
         <div className="flex items-center gap-3">
@@ -83,8 +146,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal }) => {
             }`}
             title="Configure Shelby Developer API Key"
           >
-            <Key className="w-3.5 h-3.5" />
-            <span>{hasShelbyKey ? 'Shelby Key: Set' : 'Shelby Key (Optional)'}</span>
+            <Key className="w-3.5 h-3.5 text-[#D4DE95]" />
+            <span>{hasShelbyKey ? 'Shelby Key: Active' : 'Shelby Key'}</span>
           </button>
 
           {/* Wallet Button */}
@@ -117,7 +180,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal }) => {
             <button
               onClick={handleConnect}
               disabled={isConnecting}
-              className="glow-lime-hover relative flex items-center gap-2 bg-[#636B2F] hover:bg-[#636B2F]/90 text-[#D4DE95] font-semibold text-sm px-4 py-2 rounded-xl border border-[#D4DE95]/40 transition-all duration-300 transform active:scale-95 disabled:opacity-50"
+              className="glow-lime-hover relative flex items-center gap-2 bg-[#636B2F] hover:bg-[#636B2F]/90 text-[#D4DE95] font-semibold text-sm px-4 py-2 rounded-xl border border-[#D4DE95]/40 transition-all duration-300 transform active:scale-95 disabled:opacity-50 shadow-md"
             >
               <Wallet className="w-4 h-4 text-[#D4DE95]" />
               <span>{isConnecting ? 'Connecting Petra...' : 'Connect Wallet'}</span>

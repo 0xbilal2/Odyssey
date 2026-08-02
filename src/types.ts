@@ -4,6 +4,7 @@ export interface Note {
   body: string;
   preview: string;
   isEncrypted: boolean;
+  isFavorite?: boolean;
   cipherText?: string;
   iv?: string;
   salt?: string;
@@ -17,3 +18,16 @@ export interface Note {
 }
 
 export type TagType = 'All' | 'Work' | 'Personal' | 'Research' | 'Crypto' | 'Ideas';
+
+export type ActiveNavView = 
+  | 'all' 
+  | 'recent' 
+  | 'favorites' 
+  | 'work' 
+  | 'personal' 
+  | 'research'
+  | 'editor'
+  | 'features'
+  | 'security'
+  | 'pricing';
+
