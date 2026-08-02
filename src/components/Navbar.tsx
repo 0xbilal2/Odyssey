@@ -58,11 +58,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal, activeNav,
           <div className="relative">
             <img 
               src={logoUrl} 
-              onError={(e) => {
-                const target = e.currentTarget as HTMLImageElement;
-                target.onerror = null;
-                target.src = '/logo.png';
-              }}
               alt="Odyssey Logo" 
               className="w-9 h-9 rounded-xl object-cover border border-[#BAC095]/40 shadow-md group-hover:scale-105 transition-transform"
             />
