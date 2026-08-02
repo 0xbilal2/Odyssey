@@ -1,5 +1,6 @@
 import React from 'react';
 import { Github, Globe, BookOpen, Twitter, User } from 'lucide-react';
+import logoUrl from '../assets/logo.png';
 
 interface FooterProps {
   onNavigate?: (page: string) => void;
@@ -13,7 +14,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Left branding with Logo */}
         <div className="flex items-center gap-2.5">
           <img 
-            src="/logo.png" 
+            src={logoUrl} 
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/logo.png'; }}
             alt="Odyssey Logo" 
             className="w-6 h-6 rounded-md object-cover border border-[#BAC095]/30 shadow-sm"
           />

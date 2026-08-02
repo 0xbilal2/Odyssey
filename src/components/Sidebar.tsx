@@ -2,6 +2,7 @@ import React from 'react';
 import { FileText, Clock, Star, Folder, LogOut, Plus } from 'lucide-react';
 import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { ActiveNavView } from '../types';
+import logoUrl from '../assets/logo.png';
 
 interface SidebarProps {
   activeNav: ActiveNavView;
@@ -43,7 +44,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="space-y-6">
         <div className="flex items-center gap-3 px-2 pt-2">
           <img
-            src="/logo.png"
+            src={logoUrl}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/logo.png'; }}
             alt="Odyssey Logo"
             className="w-8 h-8 rounded-xl object-cover border border-[#BAC095]/40 shadow-sm"
           />
