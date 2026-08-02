@@ -1,0 +1,6 @@
+{
+  "name": "Odyssey",
+  "description": "Decentralized, encrypted notes app built on the Shelby Protocol and Aptos blockchain.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

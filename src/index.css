@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Hanken Grotesk', sans-serif;
+    background-color: #3D4127;
+    color: #BAC095;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', sans-serif;
+  }
+}
+
+.font-display {
+  font-family: 'Manrope', sans-serif;
+}
+
+.font-body {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Mossy Glow Utilities */
+.glow-lime {
+  box-shadow: 0 0 15px rgba(212, 222, 149, 0.35);
+}
+
+.glow-lime-hover:hover {
+  box-shadow: 0 0 18px rgba(212, 222, 149, 0.45);
+}
+
+.glow-olive {
+  box-shadow: 0 0 12px rgba(99, 107, 47, 0.4);
+}
+
+.border-lime-glow {
+  box-shadow: inset 0 0 12px rgba(212, 222, 149, 0.12);
+}
+
+/* Custom scrollbar for dark moss aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #2D301C;
+}
+::-webkit-scrollbar-thumb {
+  background: #636B2F;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #BAC095;
+}
+
