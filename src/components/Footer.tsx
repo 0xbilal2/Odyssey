@@ -1,6 +1,6 @@
 import React from 'react';
 import { Github, Globe, BookOpen, Twitter, User } from 'lucide-react';
-import logoUrl from '../assets/logo.png';
+import logoUrl from '../assets/logo.jpg';
 
 interface FooterProps {
   onNavigate?: (page: string) => void;
@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <img 
             src={logoUrl} 
             alt="Odyssey Logo" 
-            onError={(e) => { (e.target as HTMLImageElement).src = '/logo.png'; }}
+            onError={(e) => { (e.target as HTMLImageElement).src = '/logo.jpg'; }}
             className="w-6 h-6 rounded-md object-cover border border-[#BAC095]/30 shadow-sm"
           />
           <span className="font-display font-bold text-[#D4DE95] text-sm">Odyssey</span>
