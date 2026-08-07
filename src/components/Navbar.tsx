@@ -59,7 +59,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal, activeNav,
             <img 
               src={logoUrl} 
               alt="Odyssey Logo" 
-              onError={(e) => { (e.target as HTMLImageElement).src = '/logo.jpg'; }}
               className="w-9 h-9 rounded-xl object-cover border border-[#BAC095]/40 shadow-md group-hover:scale-105 transition-transform"
             />
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
