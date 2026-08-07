@@ -3,7 +3,6 @@ import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import { ShieldCheck, Wallet, LogOut, Copy, Check, Key, FileText, LayoutGrid } from 'lucide-react';
 import { getShelbyApiKey } from '../lib/shelby';
 import { ActiveNavView } from '../types';
-import logoUrl from '../assets/logo.jpg';
 
 interface NavbarProps {
   onOpenShelbyKeyModal: () => void;
@@ -57,9 +56,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal, activeNav,
         >
           <div className="relative">
             <img 
-              src={logoUrl} 
+              src="/logo.jpg" 
               alt="Odyssey Logo" 
-              className="w-9 h-9 rounded-xl object-cover border border-[#BAC095]/40 shadow-md group-hover:scale-105 transition-transform"
+              className="h-9 w-auto object-contain group-hover:scale-105 transition-transform"
             />
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4DE95] opacity-75"></span>
