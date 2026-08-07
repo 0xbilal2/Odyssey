@@ -54,17 +54,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenShelbyKeyModal, activeNav,
           onClick={() => onNavigate?.(connected ? 'all' : 'all')} 
           className="flex items-center gap-3 text-left group hover:opacity-95 transition-opacity cursor-pointer"
         >
-          <div className="relative">
-            <img 
-              src="/logo.jpg" 
-              alt="Odyssey Logo" 
-              className="h-9 w-auto object-contain group-hover:scale-105 transition-transform"
-            />
-            <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4DE95] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#D4DE95]"></span>
-            </span>
-          </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="font-display font-bold text-xl text-[#D4DE95] tracking-tight">Odyssey</span>

@@ -12,11 +12,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         
         {/* Left branding with Logo */}
         <div className="flex items-center gap-2.5">
-          <img 
-            src="/logo.jpg" 
-            alt="Odyssey Logo" 
-            className="h-6 w-auto object-contain"
-          />
           <span className="font-display font-bold text-[#D4DE95] text-sm">Odyssey</span>
           <span className="text-[#BAC095]/40">•</span>
           <span>© 2024 Odyssey Protocol. Securely encrypted.</span>
